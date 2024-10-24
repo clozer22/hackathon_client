@@ -44,7 +44,7 @@ const Login = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-sm text-slate-500 mb-2">Email</label>
-                <input className="w-full px-2 py-2 border rounded-lg text-sm" type="text" id="email" name="email" required onChange={(e) => setUserEmail(e.target.value)}/>
+                <input className="w-full px-2 py-2 border rounded-lg text-sm" type="text" id="email" name="email" required value={userEmail} onChange={(e) => setUserEmail(e.target.value)}/>
               </div>
               <div className="mb-1">
                 <label className="block text-sm text-slate-500 mb-2">Password</label>

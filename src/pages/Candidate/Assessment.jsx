@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Assessment = ({newJobRole}) => {
   const navigate = useNavigate();
 
   const [userEmail, setUserEmail] = useState();
@@ -25,7 +25,7 @@ const Login = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       const response = await axiosInstance.get(
-        `/api/generate-questions/${jobRole}/${candidateId}`
+        `/api/generate-questions/${newJobRole}/${candidateId}`
       );
 
       if (
@@ -45,6 +45,8 @@ const Login = () => {
   const fetch = async () => {
     fetchQuestions();
   };
+
+
 
   useEffect(() => {
     const fetchGeneratedQuestions = async () => {
@@ -199,4 +201,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Assessment;

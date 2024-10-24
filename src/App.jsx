@@ -13,6 +13,7 @@ import Reviews from "./pages/HR/Reviews";
 import Resume from "./pages/HR/Resume";
 import Assessment from "./pages/Candidate/Assessment";
 import ResultPage from "./pages/Candidate/ResultPage";
+import AddRole from "./pages/Candidate/AddRole";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/assessment" element={<Assessment />} />
           <Route path="/resultPage" element={<ResultPage />} />
           <Route path="/candidateProfile" element={<CandidateProfile />} />
+          <Route path="/addrole" element={<AddRole />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/hrLogin" element={<HRLogin />} />
           <Route path="/calendar" element={<Calendar />} />
