@@ -1,40 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css'; // Make sure you import the CSS for the calendar
+import axiosInstance from '../../api/axiosInstance';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Sidebar from '../../commons/Sidebar'; ''
 
 const localizer = momentLocalizer(moment);
 
 const CalendarSchedule = () => {
-  // Dummy event list
-  const myEventsList = [
-    {
-      title: 'Project Meeting',
-      start: new Date(2024, 9, 25, 10, 0),  // October 25, 2024, 10:00 AM
-      end: new Date(2024, 9, 25, 12, 0),    // October 25, 2024, 12:00 PM
-    },
-    {
-      title: 'Team Building Activity',
-      start: new Date(2024, 9, 26, 9, 0),   // October 26, 2024, 9:00 AM
-      end: new Date(2024, 9, 26, 17, 0),    // October 26, 2024, 5:00 PM
-    },
-    {
-      title: 'Client Presentation',
-      start: new Date(2024, 9, 27, 14, 0),  // October 27, 2024, 2:00 PM
-      end: new Date(2024, 9, 27, 15, 30),   // October 27, 2024, 3:30 PM
-    },
-  ];
+  const [events, setEvents] = useState([]); 
+
+  const fetchEvents = async () => {
+    try {
+      const response = await axiosInstance.get('/api/getSchedule');
+
+      // Map the data to the format needed for the calendar
+      const formattedEvents = response.data.map(event => ({
+        title: event.title,
+        start: new Date(event.start),
+        end: new Date(event.end),   
+      }));
+
+      setEvents(formattedEvents); // Update state with formatted events
+      console.log('Fetched Events:', formattedEvents); // Log formatted events
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents(); // Fetch events on component mount
+  }, []);
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl font-bold mb-4">Schedule Calendar</h1>
-      <Calendar
-        localizer={localizer}
-        events={myEventsList} // Pass the dummy event list here
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }} // Adjust the height as needed
-      />
+    <div className='h-screen'>
+      <div className='flex h-full'>
+        <Sidebar/>
+        <div className='w-full h-screen p-8'>
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 500 }} 
+          />
+        </div>
+        
+      </div>
+      
     </div>
   );
 };
